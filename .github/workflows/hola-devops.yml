@@ -7,6 +7,12 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:  # Permite ejecución manual
+    inputs:
+      mensaje:
+        description: 'Mensaje personalizado'
+        required: true
+        default: '¡Hola DevOps!'
 
 # Jobs que se ejecutarán
 jobs:
@@ -24,6 +30,42 @@ jobs:
       # Paso 2: Ejecutar comando de shell
       - name: Imprimir mensaje de bienvenida
         run: echo "¡Hola DevOps!"
+
+      - name: Primer mensaje
+        run: echo "🚀 Iniciando el workflow"
+
+      - name: Mensaje principal
+        run: |
+          echo "👋 ¡Hola DevOps!"
+          echo "🎉 Este es tu primer workflow"
+          echo "🚀 Sigue aprendiendo GitHub Actions"
+        
+      - name: Mensaje de despedida
+        run: echo "✅ Workflow completado exitosamente"
+
+      - name: Imprimir mensaje personalizado
+        env:
+          MENSAJE: "¡Hola DevOps!"
+          AUTOR: "Manuel Corral"
+        run: |
+          echo "$MENSAJE"
+          echo "Creado por: $AUTOR"
+
+      - name: Crear archivo de saludo
+        run: |
+          echo "¡Hola DevOps!" > saludo.txt
+          echo "Archivo creado exitosamente"
+    
+      - name: Mostrar contenido del archivo
+        run: cat saludo.txt
+
+      - name: Mensaje condicional
+        run: |
+          if [ "${{ github.event_name }}" == "push" ]; then
+            echo "📝 Ejecutado por push a ${{ github.ref }}"
+          elif [ "${{ github.event_name }}" == "pull_request" ]; then
+            echo "🔍 Ejecutado por pull request"
+          fin
       
       # Paso 3: Mostrar información del sistema
       - name: Mostrar información del sistema
