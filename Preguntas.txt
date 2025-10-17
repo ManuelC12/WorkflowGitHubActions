@@ -1,0 +1,13 @@
+1. ¿Qué sucede si eliminas el paso de checkout?
+    - Si quitas el checkout, el runner no descarga el código del repositorio, así que los pasos siguientes no podrán acceder a los archivos del proyecto. En este caso no pasaría mucho porque solo usamos echo, pero supongo que en proyectos reales el workflow fallaría.
+
+2. ¿Por qué es importante especificar la rama en el evento on?
+    - Porque así controlas cuándo se ejecuta el workflow. Si no defines la rama, podría correr en todas o no correr nunca. Al parecer normalmente se usa main para que solo se ejecute en la rama principal del proyecto.
+
+3. ¿Qué diferencia hay entre run y uses en un step?
+    - run sirve para ejecutar comandos directamente en la terminal del runner (por ejemplo echo o npm install).
+    - uses se utiliza para llamar acciones ya hechas, como actions/checkout@v4. En resumen: run ejecuta comandos, uses reutiliza acciones.
+
+4. ¿Cómo podrías hacer que este workflow se ejecute en otras ramas?
+    - Según información de github, solo tienes que agregar las ramas en el bloque branches, por ejemplo:
+    - branches: [ main, Fulano, Sutano, Bugs... ]
